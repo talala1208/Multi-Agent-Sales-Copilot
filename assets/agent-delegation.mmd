@@ -3,10 +3,11 @@ config:
   theme: base
   flowchart:
     htmlLabels: true
-    wrappingWidth: 320
-    padding: 18
-    nodeSpacing: 40
-    rankSpacing: 48
+    useMaxWidth: false
+    wrappingWidth: 480
+    padding: 22
+    nodeSpacing: 44
+    rankSpacing: 52
   themeVariables:
     fontFamily: ui-sans-serif, system-ui, sans-serif
     fontSize: 20px
@@ -18,22 +19,38 @@ config:
     clusterBorder: '#cbd5e1'
 ---
 flowchart LR
-    User["Jane / 用户"] --> Orchestrator["主 Agent\n协调者"]
+    User["<div style='display:inline-block;min-width:140px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>Jane / 用户</b></div>"]
 
-    Orchestrator --> Analyst["chinook-analyst\n数据库专家"]
-    Orchestrator --> Inbox["inbox-manager\n邮件专家"]
-    Orchestrator --> Reviewer["quote-reviewer\n报价审核"]
-    Orchestrator --> Async["start_async_task\nnewsletter-agent"]
+    Orchestrator["<div style='display:inline-block;min-width:180px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>主 Agent</b><br/><span style='font-size:17px'>协调者</span></div>"]
 
-    Analyst --> SQL["query_chinook\nintrospect_schema"]
-    Analyst --> Write["add_customer\n需审批"]
-    Inbox --> MailTools["mail_list / read\nmail_create_draft 需审批"]
-    Reviewer --> Check["算术与价格合理性"]
-    Async --> NLGraph["newsletter-agent 图"]
+    Analyst["<div style='display:inline-block;min-width:220px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>chinook-analyst</b><br/><span style='font-size:17px'>数据库专家</span></div>"]
+    Inbox["<div style='display:inline-block;min-width:200px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>inbox-manager</b><br/><span style='font-size:17px'>邮件专家</span></div>"]
+    Reviewer["<div style='display:inline-block;min-width:200px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>quote-reviewer</b><br/><span style='font-size:17px'>报价审核</span></div>"]
+    Async["<div style='display:inline-block;min-width:240px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>start_async_task</b><br/><span style='font-size:17px'>newsletter-agent</span></div>"]
 
-    NLGraph --> Genre["genre-researcher × N\n并行调研"]
-    Genre --> Search["internet_search"]
-    Genre --> HTML["markdown_to_html"]
+    SQL["<div style='display:inline-block;min-width:240px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>query_chinook</b><br/><span style='font-size:17px'>introspect_schema</span></div>"]
+    Write["<div style='display:inline-block;min-width:180px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>add_customer</b><br/><span style='font-size:17px'>需审批</span></div>"]
+    MailTools["<div style='display:inline-block;min-width:320px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>mail_list / read</b><br/><span style='font-size:17px'>mail_create_draft 需审批</span></div>"]
+    Check["<div style='display:inline-block;min-width:220px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>算术与价格合理性</b></div>"]
+    NLGraph["<div style='display:inline-block;min-width:220px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>newsletter-agent</b><br/><span style='font-size:17px'>独立图</span></div>"]
+
+    Genre["<div style='display:inline-block;min-width:240px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>genre-researcher × N</b><br/><span style='font-size:17px'>并行调研</span></div>"]
+    Search["<div style='display:inline-block;min-width:180px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>internet_search</b></div>"]
+    HTML["<div style='display:inline-block;min-width:200px;padding:12px 24px;text-align:center;font-size:20px;line-height:1.45;white-space:nowrap;box-sizing:border-box'><b>markdown_to_html</b></div>"]
+
+    User --> Orchestrator
+    Orchestrator --> Analyst
+    Orchestrator --> Inbox
+    Orchestrator --> Reviewer
+    Orchestrator --> Async
+    Analyst --> SQL
+    Analyst --> Write
+    Inbox --> MailTools
+    Reviewer --> Check
+    Async --> NLGraph
+    NLGraph --> Genre
+    Genre --> Search
+    Genre --> HTML
 
     classDef agent fill:#dbeafe,stroke:#2563eb,color:#0f172a
     classDef hub fill:#f1f5f9,stroke:#64748b,color:#0f172a
