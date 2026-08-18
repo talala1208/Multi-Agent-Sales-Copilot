@@ -1,3 +1,22 @@
+---
+config:
+  theme: base
+  flowchart:
+    htmlLabels: true
+    wrappingWidth: 320
+    padding: 18
+    nodeSpacing: 40
+    rankSpacing: 48
+  themeVariables:
+    fontFamily: ui-sans-serif, system-ui, sans-serif
+    fontSize: 20px
+    primaryColor: '#dbeafe'
+    primaryTextColor: '#0f172a'
+    primaryBorderColor: '#2563eb'
+    lineColor: '#64748b'
+    clusterBkg: '#f8fafc'
+    clusterBorder: '#cbd5e1'
+---
 flowchart LR
     User["Jane / 用户"] --> Orchestrator["主 Agent\n协调者"]
 
@@ -15,3 +34,8 @@ flowchart LR
     NLGraph --> Genre["genre-researcher × N\n并行调研"]
     Genre --> Search["internet_search"]
     Genre --> HTML["markdown_to_html"]
+
+    classDef agent fill:#dbeafe,stroke:#2563eb,color:#0f172a
+    classDef hub fill:#f1f5f9,stroke:#64748b,color:#0f172a
+    class User,Orchestrator,Analyst,Inbox,Reviewer,Async,NLGraph,Genre agent
+    class SQL,Write,MailTools,Check,Search,HTML hub
