@@ -1,37 +1,53 @@
+---
+config:
+  theme: base
+  flowchart:
+    htmlLabels: true
+    wrappingWidth: 420
+    padding: 22
+    nodeSpacing: 44
+    rankSpacing: 56
+  themeVariables:
+    fontFamily: ui-sans-serif, system-ui, sans-serif
+    fontSize: 22px
+    primaryColor: '#dbeafe'
+    primaryTextColor: '#0f172a'
+    primaryBorderColor: '#2563eb'
+    lineColor: '#64748b'
+    clusterBkg: '#f8fafc'
+    clusterBorder: '#cbd5e1'
+---
 flowchart TB
-    subgraph UI["Chat UI"]
-        Chat["agent-chat-ui\nNext.js + LangGraph SDK"]
-        Inbox["Agent Inbox\n审批 / 中断"]
-        Files["沙箱文件面板"]
+    ui["<div style='min-width:640px;padding:12px 20px;text-align:center;font-size:22px;line-height:1.45'><b>呈现层 · agent-chat-ui</b><br/><span style='font-size:18px'>对话流 · Agent Inbox 审批 · 沙箱文件面板</span></div>"]
+
+    lg["<div style='min-width:400px;padding:14px 20px;text-align:center;font-size:22px;line-height:1.45'><b>LangGraph 运行时</b><br/><span style='font-size:18px'>langgraph dev · :2024</span></div>"]
+
+    subgraph main_col["主链路"]
+        direction TB
+        main["<div style='min-width:340px;padding:12px 18px;text-align:center;font-size:22px;line-height:1.45'><b>主 Agent</b><br/><span style='font-size:18px'>chinook-sales-assistant</span></div>"]
+        sandbox["<div style='min-width:340px;padding:12px 18px;text-align:center;font-size:22px;line-height:1.45'><b>Daytona 沙箱</b><br/><span style='font-size:18px'>skills · outputs · QuickJS</span></div>"]
+        data["<div style='min-width:340px;padding:12px 18px;text-align:center;font-size:22px;line-height:1.45'><b>数据与通信</b><br/><span style='font-size:18px'>Chinook SQLite · Mock Mail :5002</span></div>"]
+        llm_main["<div style='min-width:300px;padding:12px 18px;text-align:center;font-size:22px;line-height:1.45'><b>DashScope</b><br/><span style='font-size:18px'>通义千问 API</span></div>"]
+        main --> sandbox
+        main --> data
+        main --> llm_main
     end
 
-    subgraph Runtime["LangGraph 运行时"]
-        LG["langgraph dev\n:2024"]
-        Main["主 Agent\nchinook-sales-assistant"]
-        NL["newsletter-agent\n独立图"]
+    subgraph async_col["异步周报链路"]
+        direction TB
+        nl["<div style='min-width:340px;padding:12px 18px;text-align:center;font-size:22px;line-height:1.45'><b>newsletter-agent</b><br/><span style='font-size:18px'>独立图 · 后台运行</span></div>"]
+        search["<div style='min-width:300px;padding:12px 18px;text-align:center;font-size:22px;line-height:1.45'><b>Tavily</b><br/><span style='font-size:18px'>genre 联网调研</span></div>"]
+        llm_nl["<div style='min-width:300px;padding:12px 18px;text-align:center;font-size:22px;line-height:1.45'><b>DashScope</b><br/><span style='font-size:18px'>通义千问 API</span></div>"]
+        nl --> search
+        nl --> llm_nl
     end
 
-    subgraph Sandbox["Daytona 沙箱（按 thread）"]
-        FS["文件系统\nskills / outputs / AGENTS.md"]
-        Exec["代码执行\nQuickJS + execute"]
-    end
+    ui --> lg
+    lg --> main
+    lg --> nl
 
-    subgraph External["外部服务"]
-        DS["DashScope\n通义千问"]
-        Tavily["Tavily\n联网搜索"]
-        Mail["Mock Mail MCP\n:5002"]
-        DB["Chinook SQLite\n只读 + 门控写入"]
-    end
-
-    Chat --> LG
-    Inbox --> LG
-    Files --> Sandbox
-    LG --> Main
-    LG --> NL
-    Main --> Sandbox
-    Main --> DS
-    Main --> Mail
-    Main --> NL
-    NL --> Tavily
-    NL --> DS
-    Main --> DB
+    classDef agent fill:#dbeafe,stroke:#2563eb,color:#0f172a
+    classDef hub fill:#f1f5f9,stroke:#64748b,color:#0f172a
+    class lg hub
+    class main,nl agent
+    class sandbox,data,llm_main,search,llm_nl hub
