@@ -1,4 +1,3 @@
-# python/m5/sales_assistant_sandbox/agent.py
 """Chinook 销售助手。
 
 整个文件系统 — 技能、记忆以及 agent 写入或运行的任何内容 —
@@ -50,7 +49,7 @@ load_dotenv(HERE / ".env")
 
 # Daytona 沙箱用户写不了容器根 `/`，一律用工作目录（通常是 /home/daytona）。
 DEFAULT_ROOT = "/home/daytona"
-_LESSON_PREFIXES = ("/AGENTS.md", "/outputs", "/skills", "/agents", "/research")
+_VIRTUAL_PATH_PREFIXES = ("/AGENTS.md", "/outputs", "/skills", "/agents", "/research")
 
 
 def _writable_root(sandbox) -> str:
@@ -62,9 +61,9 @@ def _writable_root(sandbox) -> str:
     return work_dir
 
 
-def _lesson_to_root(text: str, root: str) -> str:
+def _rewrite_virtual_paths(text: str, root: str) -> str:
     rewritten = text
-    for virt in _LESSON_PREFIXES:
+    for virt in _VIRTUAL_PATH_PREFIXES:
         rewritten = rewritten.replace(virt, f"{root}{virt}")
     return rewritten
 
@@ -131,7 +130,7 @@ def _seed_skills_and_memory(backend: DaytonaSandbox, root: str) -> None:
     def _bytes(path: Path) -> bytes:
         raw = path.read_bytes()
         if path.suffix.lower() in {".md", ".txt"}:
-            return _lesson_to_root(raw.decode("utf-8"), root).encode("utf-8")
+            return _rewrite_virtual_paths(raw.decode("utf-8"), root).encode("utf-8")
         return raw
 
     files: list[tuple[str, bytes]] = [(f"{root}/AGENTS.md", _bytes(HERE / "AGENTS.md"))]

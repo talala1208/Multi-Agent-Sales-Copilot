@@ -1,7 +1,6 @@
-# python/m5/tools/search.py
 """genre-researcher 子 agent（每周周报）的网页搜索工具。
 
-Tavily 的薄封装，与 Module 4 实验精神相同。仅属于调研子 agent。
+Tavily 的薄封装。仅属于调研子 agent。
 需在环境中设置 TAVILY_API_KEY；若缺失则简单不注册该工具（见 subagents.py），
 其余助手仍可运行。
 """

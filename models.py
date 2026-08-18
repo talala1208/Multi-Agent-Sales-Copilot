@@ -1,8 +1,8 @@
 """模型初始化文件
 
-配置课程中使用的 LLM 模型。
+配置本项目使用的 LLM 模型。
 
-默认：Anthropic claude-haiku-4-5（快速、便宜，适合学习）。
+默认：Anthropic claude-haiku-4-5（快速、经济）。
 
 ═══════════════════════════════════════════════════════════════════════════
   ⚠  重要：切换提供商前请先安装对应的 extra
@@ -117,7 +117,7 @@ class DashScopeChatOpenAI(ChatOpenAI):
 
 
 # ═══ 默认模型 ══════════════════════════════════════════════════════════
-# 工作坊默认：Anthropic claude-haiku-4-5，快速且经济。
+# 默认备选：Anthropic claude-haiku-4-5，快速且经济。
 # 需在 .env 中设置 ANTHROPIC_API_KEY
 # model = init_chat_model("anthropic:claude-haiku-4-5", timeout=60, max_retries=2)
 

@@ -1,4 +1,3 @@
-# python/m5/sales_assistant/mcp/send_to_inbox.py
 """向模拟邮箱投递消息 — 离线替代「客户刚给你发了邮件」。
 
 无参数运行则从 ``seeds/`` 加载捆绑的 RFQ 夹具；或传入 --from / --subject / --body

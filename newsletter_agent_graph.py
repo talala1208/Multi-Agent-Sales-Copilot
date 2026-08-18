@@ -1,4 +1,3 @@
-# python/m5/sales_assistant_sandbox/newsletter_agent_graph.py
 """newsletter-agent：作为异步子 agent 启动的独立图。
 
 在 langgraph.json 中注册为独立入口，使主 agent 的 `AsyncSubAgentMiddleware`

@@ -1,10 +1,9 @@
-# python/m5/sales_assistant/test_diagnostic.py
 """Chinook 销售助手的分层诊断测试。
 
 按顺序运行所有能力层并打印摘要。先启动两个服务，再在第二个终端运行：
 
-    ./start.sh                          # 终端 1
-    uv run python test_diagnostic.py    # 终端 2
+    ./start.sh                              # 终端 1
+    uv run python test/test_diagnostic.py   # 终端 2
 """
 
 from __future__ import annotations
@@ -12,6 +11,7 @@ from __future__ import annotations
 import asyncio
 import os
 import subprocess
+import sys
 import textwrap
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,8 +20,12 @@ from typing import Literal
 from dotenv import load_dotenv
 from langgraph_sdk import get_client
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 # 加载 langgraph.json 指向的同一 .env。
-load_dotenv(Path(__file__).parent / ".env")
+load_dotenv(PROJECT_ROOT / ".env")
 
 API_URL = "http://127.0.0.1:2024"
 Status = Literal["PASS", "FAIL", "SKIP"]
@@ -96,6 +100,7 @@ def _reset_inbox() -> None:
     subprocess.run(
         ["uv", "run", "python", "mcp/send_to_inbox.py", "--reset"],
         capture_output=True,
+        cwd=PROJECT_ROOT,
     )
 
 

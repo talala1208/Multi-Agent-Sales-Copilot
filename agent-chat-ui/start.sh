@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 启动 agent-chat-ui，从调用方课程的 .env 读取 LANGSMITH_API_KEY 和 DAYTONA_API_KEY
+# 启动 agent-chat-ui，从项目根目录的 .env 读取 LANGSMITH_API_KEY 和 DAYTONA_API_KEY
 # （而非可能过期的 .env.local 副本），覆盖 shell 中已设置的值
 # （dotenv 类加载器，含 Next.js 自带，不会覆盖已存在的环境变量）。
 #

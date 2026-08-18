@@ -1,12 +1,10 @@
 # Agent Chat UI
 
-> **Fork 说明：** 本仓库 fork 自 [langchain-ai/agent-chat-ui](https://github.com/langchain-ai/agent-chat-ui)，
-> 随课程 **m5.5「销售助手（进阶）」** 一并提供。
-> 本课新增：`/api/sandbox-files` 与 `/api/sandbox-download` 路由、
-> 异步任务状态徽章、沙箱文件面板。详见 `../thinkific/src/m5/m5.5-sandbox-async-agent.md`。
-> 其他课程（如 m5.3）使用托管 UI 或上游仓库的普通 checkout；那些课不需要本 fork。
+> **定制说明：** 本目录 fork 自 [langchain-ai/agent-chat-ui](https://github.com/langchain-ai/agent-chat-ui)，
+> 为 Chinook Sales Assistant 增加了 `/api/sandbox-files` 与 `/api/sandbox-download` 路由、
+> 异步任务状态徽章和沙箱文件面板。
 >
-> 本课运行方式：`./start.sh`（详见该脚本）。
+> 在本项目中通过根目录的 `./start.sh` 一并启动。
 
 Agent Chat UI 是一个 Next.js 应用，可通过聊天界面与任意带有 `messages` 键的 LangGraph 服务对话。
 

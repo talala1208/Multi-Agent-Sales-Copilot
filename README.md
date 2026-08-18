@@ -1,6 +1,6 @@
 # Chinook Sales Assistant
 
-从 LangChain Academy `sales_assistant_sandbox` 拆出的独立项目：主 agent 跑在 Daytona 沙箱里，模型走 DashScope 兼容模式。
+面向 Chinook 在线音乐分销商的销售支持助手：主 agent 运行在 Daytona 沙箱中，模型通过 DashScope 兼容模式调用。
 
 ## 需要什么
 
@@ -28,5 +28,5 @@ uv sync
 服务起来之后另开终端：
 
 ```bash
-uv run python test_diagnostic.py
+uv run python test/test_diagnostic.py
 ```

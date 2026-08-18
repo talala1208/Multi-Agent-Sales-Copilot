@@ -1,4 +1,3 @@
-# python/m5/sales_assistant/mcp/mock_mail_server.py
 """本地离线模拟邮件 MCP 服务器。
 
 在 5002 端口通过 HTTP（streamable-http 传输）暴露三个工具：
@@ -62,7 +61,7 @@ def mail_create_draft(to: str, subject: str, body: str) -> dict:
     """将回复保存到草稿文件夹。不会发送。
 
     模拟真实 Gmail「创建草稿」调用：消息暂存供人工审阅后发送。
-    本课程中此工具前有人机协同门，仅在明确批准后才会写入草稿。
+    此工具前有人机协同门，仅在明确批准后才会写入草稿。
     """
     store = load_store()
     draft = {

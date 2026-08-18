@@ -1,4 +1,3 @@
-# python/m5/sales_assistant_sandbox/async_research.py
 """newsletter-agent 异步子 agent 的 AsyncSubAgentMiddleware 配置。"""
 
 from deepagents.middleware.async_subagents import AsyncSubAgentMiddleware

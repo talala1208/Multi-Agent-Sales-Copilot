@@ -1,4 +1,3 @@
-# python/m5/tools/html.py
 """将周报 Markdown 渲染为带样式、已净化的 HTML 页面。
 
 属于主 agent。HTML 外壳为固定可信模板；周报正文来自不可信的网页搜索结果，

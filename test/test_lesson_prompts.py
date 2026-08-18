@@ -1,19 +1,22 @@
-# python/m5/sales_assistant/test_lesson_prompts.py
-"""m5.3-the-sales-assistant.md 中三个课程提示词的端到端测试。
+"""三个典型业务场景的端到端测试。
 
 两个服务都启动后运行：
-    uv run python test_lesson_prompts.py
+    uv run python test/test_lesson_prompts.py
 
 或通过 start.sh（启动邮件服务 + langgraph dev），然后在第二个终端：
-    uv run python test_lesson_prompts.py
+    uv run python test/test_lesson_prompts.py
 """
 
 from __future__ import annotations
 
 import asyncio
+import subprocess
 import textwrap
+from pathlib import Path
 
 from langgraph_sdk import get_client
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 API_URL = "http://127.0.0.1:2024"
 
@@ -54,10 +57,10 @@ async def run_prompt(client, label: str, prompt: str) -> None:
 
     # RFQ 测试前重置邮件存储，确保有消息可处理。
     if label == "Process RFQ":
-        import subprocess
         subprocess.run(
             ["uv", "run", "python", "mcp/send_to_inbox.py", "--reset"],
             capture_output=True,
+            cwd=PROJECT_ROOT,
         )
         print("(inbox reset)\n")
 
@@ -80,7 +83,7 @@ async def run_prompt(client, label: str, prompt: str) -> None:
         if not interrupted or interrupt_count >= 3:
             break
 
-        # 自动批准中断（模拟学生点击「批准」）。
+        # 自动批准中断（模拟用户点击「批准」）。
         interrupt_count += 1
         tasks = state.get("tasks", [])
         interrupt_info = [

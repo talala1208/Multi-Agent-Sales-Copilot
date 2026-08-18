@@ -1,4 +1,3 @@
-# python/m5/tools/sql.py
 """chinook-analyst 子 agent 的 SQL 工具。
 
 三个工具，数据库信任边界内建其中：

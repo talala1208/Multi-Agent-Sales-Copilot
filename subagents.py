@@ -1,4 +1,3 @@
-# python/m5/subagents.py
 """Chinook 销售助手的专家子 agent。
 
 通过函数构建而非在导入时定义，因为 chinook-analyst 的 MemoryMiddleware 需要

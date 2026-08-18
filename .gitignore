@@ -12,6 +12,7 @@ mcp/mail_store.json
 outputs/
 retrieve/
 research/
+.cursor/
 
 node_modules/
 .next/

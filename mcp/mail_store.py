@@ -1,10 +1,9 @@
-# python/m5/mcp/mail_store.py
 """模拟 Gmail MCP 服务器与 `send_to_inbox` 注入 CLI 共享的简易 JSON 邮箱。
 
 存储刻意简单：一个 JSON 文件，含 ``inbox`` 和 ``drafts`` 两个列表。
-使课程的 Gmail 功能可离线运行、无需 OAuth，同时呈现与真实 Gmail MCP
+使 Gmail 相关功能可离线运行、无需 OAuth，同时呈现与真实 Gmail MCP
 服务器相同的工具面（``list_messages`` / ``read_message`` / ``create_draft``）。
-此处无 Gmail 特有逻辑 — 仅够演示助手所需状态。
+此处无 Gmail 特有逻辑 — 仅够支撑助手所需状态。
 
 路径从本文件位置解析，因此无论 MCP 子进程从哪个工作目录启动，存储均可用。
 """
