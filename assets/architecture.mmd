@@ -1,0 +1,37 @@
+flowchart TB
+    subgraph UI["Chat UI"]
+        Chat["agent-chat-ui\nNext.js + LangGraph SDK"]
+        Inbox["Agent Inbox\n审批 / 中断"]
+        Files["沙箱文件面板"]
+    end
+
+    subgraph Runtime["LangGraph 运行时"]
+        LG["langgraph dev\n:2024"]
+        Main["主 Agent\nchinook-sales-assistant"]
+        NL["newsletter-agent\n独立图"]
+    end
+
+    subgraph Sandbox["Daytona 沙箱（按 thread）"]
+        FS["文件系统\nskills / outputs / AGENTS.md"]
+        Exec["代码执行\nQuickJS + execute"]
+    end
+
+    subgraph External["外部服务"]
+        DS["DashScope\n通义千问"]
+        Tavily["Tavily\n联网搜索"]
+        Mail["Mock Mail MCP\n:5002"]
+        DB["Chinook SQLite\n只读 + 门控写入"]
+    end
+
+    Chat --> LG
+    Inbox --> LG
+    Files --> Sandbox
+    LG --> Main
+    LG --> NL
+    Main --> Sandbox
+    Main --> DS
+    Main --> Mail
+    Main --> NL
+    NL --> Tavily
+    NL --> DS
+    Main --> DB

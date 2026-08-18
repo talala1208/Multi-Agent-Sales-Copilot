@@ -2,27 +2,8 @@
 
 配置本项目使用的 LLM 模型。
 
-默认：Anthropic claude-haiku-4-5（快速、经济）。
-
-═══════════════════════════════════════════════════════════════════════════
-  ⚠  重要：切换提供商前请先安装对应的 extra
-═══════════════════════════════════════════════════════════════════════════
-
-  提供商              安装命令                      已安装？
-  --------------------  ---------------------------  ---------------------
-  Anthropic（默认）   -                            是（默认依赖）
-  OpenAI                -                            是（默认依赖）
-  Azure OpenAI          uv sync --extra azure        否 — 需先安装
-  AWS Bedrock           uv sync --extra bedrock      否 — 需先安装
-  Google Vertex/Gemini  uv sync --extra google       否 — 需先安装
-
-═══════════════════════════════════════════════════════════════════════════
-
 切换提供商：
-  1. 运行上表安装命令（如需要）。
-  2. 注释掉下方当前激活的模型行。
-  3. 取消注释目标提供商对应段落。
-  4. 在 `.env` 中设置该提供商的环境变量（见行内说明）。
+  `.env` 中设置提供商的环境变量。
 """
 
 import os  # noqa: F401  # 下方注释掉的模型示例中会用到
@@ -33,8 +14,6 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 
 load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env", override=True)
-
-# from langchain.chat_models import init_chat_model
 
 # deepagents 的 Memory / Skills 会把 system prompt 收成 Anthropic 风格的
 # content list（缺 type、带 cache_control、或混进纯字符串）。百炼兼容模式要求：
@@ -117,14 +96,12 @@ class DashScopeChatOpenAI(ChatOpenAI):
 
 
 # ═══ 默认模型 ══════════════════════════════════════════════════════════
-# 默认备选：Anthropic claude-haiku-4-5，快速且经济。
-# 需在 .env 中设置 ANTHROPIC_API_KEY
-# model = init_chat_model("anthropic:claude-haiku-4-5", timeout=60, max_retries=2)
 
-MODEL="qwen3.7-max-preview"
+MODEL="qwen3.7-flash-2026-07-15"
+STRONG_MODEL="qwen3.8-max"
 
 model = DashScopeChatOpenAI(
-  model="qwen3.7-flash-2026-07-15",
+  model=MODEL,
   api_key=os.environ["DASHSCOPE_API_KEY"],
   base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
   timeout=500,
@@ -136,72 +113,11 @@ model = DashScopeChatOpenAI(
 # 需要更强推理的步骤使用能力更强的模型
 # strong_model = init_chat_model("anthropic:claude-sonnet-4-6", timeout=120, max_retries=2)
 strong_model = DashScopeChatOpenAI(
-  model=MODEL,
+  model=STRONG_MODEL,
   api_key=os.environ["DASHSCOPE_API_KEY"],
   base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
   # timeout=1000,
   max_retries=2,
   use_responses_api=False,
-  # extra_body={"enable_thinking": False},
+  extra_body={"enable_thinking": False},
 )
-
-# ═══ 备选模型（注释掉上方默认配置，取消注释其一）════════════════════
-# model = init_chat_model("anthropic:claude-sonnet-4-6")
-# model = init_chat_model("openai:gpt-4.1-mini")
-# model = init_chat_model("openai:gpt-4.1")
-# strong_model = init_chat_model("openai:gpt-4.1")
-
-# ═══ 开源 / 其他托管模型 ══════════════════════════════════════════════════
-
-# Groq：Llama、Mixtral 等快速托管推理（有免费额度）
-# 先安装：uv add langchain-groq
-# 需在 .env 中设置 GROQ_API_KEY（在 console.groq.com 获取）
-#
-# model = init_chat_model("groq:llama-3.3-70b-versatile")
-
-# Ollama：本地运行模型（无需 API 密钥）
-# langchain-ollama 已安装（默认依赖）
-# 先安装 Ollama 应用：https://ollama.com
-# 先拉取模型，例如：ollama pull qwen2.5:7b
-#
-# model = init_chat_model("ollama:qwen2.5:7b")
-
-# Kimi（月之暗面）：OpenAI 兼容托管 API
-# 无需额外安装（langchain-openai 已是默认依赖）
-# 需在 .env 中设置 KIMI_API_KEY（在 platform.moonshot.cn 获取）
-#
-# from langchain_openai import ChatOpenAI
-# model = ChatOpenAI(model="moonshot-v1-8k", base_url="https://api.moonshot.cn/v1", api_key=os.environ["KIMI_API_KEY"])
-
-# OpenRouter：通过 OpenAI 兼容 API 托管开源模型
-# 无需额外安装（langchain-openai 已是默认依赖）
-# 有免费模型；在 openrouter.ai 注册并获取 API 密钥
-# 需在 .env 中设置 OPENROUTER_API_KEY
-#
-# from langchain_openai import ChatOpenAI
-# model = ChatOpenAI(model="nvidia/nemotron-3-ultra-550b-a55b:free", base_url="https://openrouter.ai/api/v1", api_key=os.environ["OPENROUTER_API_KEY"])
-
-
-# ═══ 云提供商模型（需先安装 extra，见上表）════════════════════════════════
-# ─── Azure OpenAI ─────────────────────────────────────────────────────────────
-# 先安装：uv sync --extra azure
-# 需在 .env 中设置 AZURE_OPENAI_API_KEY、AZURE_OPENAI_ENDPOINT、
-#          OPENAI_API_VERSION、AZURE_OPENAI_DEPLOYMENT_NAME
-#
-# from langchain_openai import AzureChatOpenAI
-# model = AzureChatOpenAI(azure_deployment="gpt-4.1", api_version="2024-12-01-preview")
-
-
-# ─── AWS Bedrock ──────────────────────────────────────────────────────────────
-# 先安装：uv sync --extra bedrock
-# 需在 .env 中设置 AWS_ACCESS_KEY_ID、AWS_SECRET_ACCESS_KEY、AWS_REGION_NAME
-#
-# from langchain_aws import ChatBedrockConverse
-# model = ChatBedrockConverse(model_id="anthropic.claude-sonnet-4-6", region_name="us-east-1")
-
-
-# ─── Google Gemini ────────────────────────────────────────────────────────────
-# 先安装：uv sync --extra google
-# 需在 .env 中设置 GOOGLE_API_KEY
-#
-# model = init_chat_model("google_genai:gemini-2.5-flash")

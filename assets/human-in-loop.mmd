@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant J as Jane
+    participant UI as Chat UI
+    participant Agent as 专家子 Agent
+    participant Tool as 门控工具
+
+    J->>UI: 请求保存草稿 / 添加客户
+    UI->>Agent: 委派任务
+    Agent->>Tool: mail_create_draft / add_customer
+    Tool-->>UI: interrupt 暂停
+    UI->>J: 展示审批卡片\napprove / edit / reject
+    alt 批准
+        J->>UI: approve
+        UI->>Tool: 继续执行
+        Tool-->>Agent: 写入成功
+    else 编辑
+        J->>UI: edit + 修改内容
+        UI->>Tool: 以编辑后参数执行
+    else 拒绝
+        J->>UI: reject
+        Tool-->>Agent: 操作取消
+    end
+    Agent-->>UI: 汇总结果
+    UI-->>J: 回复

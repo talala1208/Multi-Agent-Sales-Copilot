@@ -1,0 +1,17 @@
+flowchart LR
+    User["Jane / 用户"] --> Orchestrator["主 Agent\n协调者"]
+
+    Orchestrator --> Analyst["chinook-analyst\n数据库专家"]
+    Orchestrator --> Inbox["inbox-manager\n邮件专家"]
+    Orchestrator --> Reviewer["quote-reviewer\n报价审核"]
+    Orchestrator --> Async["start_async_task\nnewsletter-agent"]
+
+    Analyst --> SQL["query_chinook\nintrospect_schema"]
+    Analyst --> Write["add_customer\n需审批"]
+    Inbox --> MailTools["mail_list / read\nmail_create_draft 需审批"]
+    Reviewer --> Check["算术与价格合理性"]
+    Async --> NLGraph["newsletter-agent 图"]
+
+    NLGraph --> Genre["genre-researcher × N\n并行调研"]
+    Genre --> Search["internet_search"]
+    Genre --> HTML["markdown_to_html"]

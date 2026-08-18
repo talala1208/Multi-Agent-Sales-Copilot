@@ -1,6 +1,5 @@
 # Agent Chat UI
 
-> **定制说明：** 本目录 fork 自 [langchain-ai/agent-chat-ui](https://github.com/langchain-ai/agent-chat-ui)，
 > 为 Chinook Sales Assistant 增加了 `/api/sandbox-files` 与 `/api/sandbox-download` 路由、
 > 异步任务状态徽章和沙箱文件面板。
 >

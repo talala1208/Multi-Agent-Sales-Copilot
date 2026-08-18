@@ -13,6 +13,7 @@ outputs/
 retrieve/
 research/
 .cursor/
+temp/
 
 node_modules/
 .next/

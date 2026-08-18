@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant J as Jane
+    participant Main as 主 Agent
+    participant Async as AsyncSubAgentMiddleware
+    participant NL as newsletter-agent
+    participant Store as LangGraph Store
+
+    J->>Main: 生成本周周报
+    Main->>Main: chinook-analyst 取头部类型
+    Main->>Async: start_async_task
+    Async->>NL: 后台启动（新 thread）
+    Async-->>Main: 立即返回 task_id
+    Main-->>J: 周报制作中，稍后询问
+
+    par 后台并行
+        NL->>NL: genre-researcher × 4
+        NL->>NL: 组装 Markdown
+        NL->>NL: markdown_to_html
+    end
+    NL->>Store: 写入结果
+
+    J->>Main: 周报好了吗？
+    Main->>Async: list_async_tasks / check_async_task
+    Async->>Store: 读取状态
+    Store-->>Async: status=success + HTML
+    Main->>Main: write_file 到 /outputs/
+    Main-->>J: 保存路径与摘要
