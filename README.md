@@ -30,7 +30,7 @@
 
 ## 系统架构
 
-系统架构
+![系统架构](./assets/architecture.png)
 
 ---
 
@@ -38,8 +38,7 @@
 
 ## Agent 编排
 
-Agent 编排
-
+![Agent 编排](./assets/agent-delegation.png)
 
 | 专家                   | 职责                  | 工具 / 模型                                                 |
 | -------------------- | ------------------- | ------------------------------------------------------- |
@@ -58,7 +57,7 @@ Agent 编排
 
 敏感任务不自动写入或执行 — 工具调用暂停，由 Chat UI 的 Agent Inbox 呈现审批卡片。
 
-人机协同审批
+![人机协同审批](./assets/human-in-loop.png)
 
 该项目中的人机协同审批点：
 
@@ -71,7 +70,7 @@ Agent 编排
 
 ## 异步周报流程
 
-异步周报流程
+![异步周报流程](./assets/async-newsletter.png)
 
 1. 主 Agent 向 chinook-analyst 获取预设的音乐类型（或采用 Jane 指定列表）
 2. 调用 `start_async_task(subagent_type="newsletter-agent")` — 立即返回 `task_id`
