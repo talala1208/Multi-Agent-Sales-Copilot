@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["models"]
+
+[project]
+name = "chinook-sales-assistant"
+version = "0.1.0"
+requires-python = ">=3.11,<3.15"
+description = "Chinook 销售助手，含 Daytona 沙箱与 DashScope 模型"
+dependencies = [
+    "deepagents==0.7.0",
+    "langgraph>=1.0.0,<2.0",
+    "langchain>=1.0.0,<2.0",
+    "langchain-core>=1.3.3,<2.0",
+    "langchain-anthropic",
+    "langchain-openai",
+    "langgraph-cli[inmem]>=0.4.0",
+    "python-dotenv",
+    "langsmith",
+    "langchain-quickjs",
+    "langchain-mcp-adapters",
+    "tavily-python",
+    "markdown",
+    "nh3",
+    "matplotlib>=3.11.0",
+    "httpx[socks]>=0.28.1",
+    "daytona>=0.140.0",
+    "langchain-daytona>=0.0.8",
+]
+
+[tool.ruff]
+lint.select = ["E", "F", "I", "UP"]
+lint.ignore = ["T201", "E501", "UP006", "UP007", "E402"]
